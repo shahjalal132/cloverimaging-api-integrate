@@ -40,10 +40,10 @@ function clover_product_insert_woocommerce() {
         // set image limit 5
         $images = array_slice( $images, 0, 5 );
 
-        $videos     = $product_data->videos;
+        $videos = $product_data->videos;
 
         // get attributes
-        $attributes = $product_data->attributes ?? [];
+        $attributes      = $product_data->attributes ?? [];
         $attribute_name  = '';
         $attribute_value = '';
         if ( !empty( $attributes ) && is_array( $attributes ) ) {
@@ -171,6 +171,8 @@ function clover_product_insert_woocommerce() {
 
             if ( 'In Stock' == $availability ) {
                 update_post_meta( $product_id, '_stock_status', 'instock' );
+            } else {
+                update_post_meta( $product_id, '_stock_status', 'outofstock' );
             }
 
             update_post_meta( $product_id, '_sale_price', $price );
