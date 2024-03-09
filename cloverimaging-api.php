@@ -42,9 +42,3 @@ register_activation_hook( __FILE__, 'clover_invoices_db_table_create' );
 
 // require autoload file
 require_once CLOVER_PLUGIN_PATH . '/vendor/autoload.php';
-
-// require files
-/* require_once CLOVER_PLUGIN_PATH . '/inc/clover-create-db-tables.php';
-require_once CLOVER_PLUGIN_PATH . '/inc/clover-helper-functions.php';
-require_once CLOVER_PLUGIN_PATH . '/inc/clover-insert-product-to-woo.php';
-require_once CLOVER_PLUGIN_PATH . '/inc/clover-fetch-api-insert-to-db.php'; */
