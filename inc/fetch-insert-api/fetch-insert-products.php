@@ -5,7 +5,7 @@
  *
  * @return string
  */
-function fetch_all_products_api( $page = 2 ) {
+function fetch_all_products_api( $page = 1 ) {
     $curl = curl_init();
     $data = [
         'page' => $page,

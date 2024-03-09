@@ -51,10 +51,21 @@ function clover_product_insert_woocommerce() {
         // increase 30% price
         $price = round( $price * 1.3 );
 
-        $compatiblePrinters   = $product_data->compatiblePrinters;
+        $compatiblePrinters = $product_data->compatiblePrinters;
+
+        // get product dimensions and measurements
         $productBoxDimensions = $product_data->productBoxDimensions;
-        $description          = $product_data->additionalProductInformation;
-        $searchKeywords       = $product_data->searchKeywords;
+        $unitOfMeasure        = $productBoxDimensions->unitOfMeasure ?? '';
+        $length               = $productBoxDimensions->length ?? '';
+        $width                = $productBoxDimensions->width ?? '';
+        $height               = $productBoxDimensions->height ?? '';
+        $weight               = $productBoxDimensions->weight ?? '';
+
+        $description = $product_data->additionalProductInformation;
+
+        $searchKeywords = $product_data->searchKeywords;
+        // get unique value from $searchKeywords
+        $searchKeywords = array_unique( $searchKeywords );
 
         // Set up the API client with WooCommerce store URL and credentials
         $client = new Client(
@@ -156,6 +167,16 @@ function clover_product_insert_woocommerce() {
 
             update_post_meta( $product_id, '_sale_price', $price );
             update_post_meta( $product_id, '_price', $price );
+
+            // set product measurement
+            update_post_meta( $product_id, '_length', $length );
+            update_post_meta( $product_id, '_width', $width );
+            update_post_meta( $product_id, '_height', $height );
+            update_post_meta( $product_id, '_weight', $weight );
+            update_post_meta( $product_id, '_unit', $unitOfMeasure );
+
+            // set tag
+            wp_set_object_terms( $product_id, $searchKeywords, 'product_tag', true );
 
 
             // set product gallery images
