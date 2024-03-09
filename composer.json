@@ -1,5 +1,15 @@
 {
-    "require": {
-        "automattic/woocommerce": "^3.1"
-    }
+  "require": {
+    "automattic/woocommerce": "^3.1"
+  },
+  "autoload": {
+    "files": [
+      "inc/clover-create-db-tables.php",
+      "inc/clover-helper-functions.php",
+      "inc/clover-insert-product-to-woo.php",
+      "inc/fetch-insert-api/fetch-insert-invoices.php",
+      "inc/fetch-insert-api/fetch-insert-product-types.php",
+      "inc/fetch-insert-api/fetch-insert-products.php"
+    ]
+  }
 }

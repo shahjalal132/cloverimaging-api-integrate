@@ -6,6 +6,15 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitcd53d4cc421fe0b70226223f299ac0ad
 {
+    public static $files = array (
+        '60ded4dfd5ca17060605f06d66e51644' => __DIR__ . '/../..' . '/inc/clover-create-db-tables.php',
+        '4905997bb03b5bbd946b23757eccd647' => __DIR__ . '/../..' . '/inc/clover-helper-functions.php',
+        '1b8ba65f1a8a97d53023cfb1c9369ffc' => __DIR__ . '/../..' . '/inc/clover-insert-product-to-woo.php',
+        'c61a04029d793595b2fe09af3e3000c7' => __DIR__ . '/../..' . '/inc/fetch-insert-api/fetch-insert-invoices.php',
+        'ac8ad2ebbd2a4f330b03c7b229b83884' => __DIR__ . '/../..' . '/inc/fetch-insert-api/fetch-insert-product-types.php',
+        '10137bf108bb5dbea94759816a7fa8bc' => __DIR__ . '/../..' . '/inc/fetch-insert-api/fetch-insert-products.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'A' => 
         array (
