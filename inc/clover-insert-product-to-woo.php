@@ -43,7 +43,17 @@ function clover_product_insert_woocommerce() {
         $images = array_slice( $images, 0, 5 );
 
         $videos     = $product_data->videos;
+
+        // get attributes
         $attributes = $product_data->attributes ?? [];
+        $attribute_name  = '';
+        $attribute_value = '';
+        if ( !empty( $attributes ) && is_array( $attributes ) ) {
+            foreach ( $attributes as $attribute ) {
+                $attribute_name .= $attribute->attributeName . '|';
+                $attribute_value .= $attribute->attributeValue . '|';
+            }
+        }
 
         $serviceLevels = $product_data->serviceLevels;
         // get price from serviceLevels
