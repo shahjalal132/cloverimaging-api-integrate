@@ -18,8 +18,8 @@ try {
 
         // WooCommerce store information
         $website_url     = home_url();
-        $consumer_key    = 'ck_99b0cc18ece4af1e7da02a49074bd9038527c852';
-        $consumer_secret = 'cs_3c64f580e0433689e7207e747ce7adc5f43e6bbb';
+        $consumer_key    = 'ck_e777c6842253c7d87394c3ab3207b09d2562d44e';
+        $consumer_secret = 'cs_2226f38aaf0256251b07d5177f414fe325184cf9';
 
         foreach ( $products as $product ) {
 
@@ -141,6 +141,13 @@ try {
 
             } else {
 
+                // Update the status of the processed product database
+                $wpdb->update(
+                    $table_name,
+                    [ 'status' => 'completed' ],
+                    [ 'id' => $product->id ]
+                );
+
                 // Create a new product if not exists
                 $product_data_to_insert = [
                     'name'        => $title,
@@ -228,13 +235,6 @@ try {
 
                 }
 
-                // Update the status of the processed product database
-                $wpdb->update(
-                    $table_name,
-                    [ 'status' => 'completed' ],
-                    [ 'id' => $product->id ]
-                );
-
                 return "<h3>Product Inserted Successfully</h3>";
             }
         }
@@ -245,3 +245,21 @@ try {
     echo '<pre><code>' . print_r( $e->getResponse(), true ) . '</code><pre>'; // Last response data.
 }
 add_shortcode( 'insert_product_to_woo', 'clover_product_insert_woocommerce' );
+
+// insert product types via api
+add_action( 'rest_api_init', 'insert_product_to_woo_via_api' );
+function insert_product_to_woo_via_api() {
+    register_rest_route(
+        'cloverimaging/v1',
+        '/product',
+        [
+            'methods'  => 'GET',
+            'callback' => 'clover_product_insert_woocommerce',
+        ]
+    );
+}
+
+/**
+ * Endpoint . replace with your endpoint
+ * http://clover-api-integrate.test/wp-json/cloverimaging/v1/product
+ */
