@@ -217,6 +217,17 @@ try {
                 wp_set_object_terms( $product_id, $type, 'product_cat' );
 
 
+                // update product additional information
+                update_post_meta( $product_id, '_jcolor', $color );
+                update_post_meta( $product_id, '_type', $type );
+                update_post_meta( $product_id, '_productID', $product_id );
+                update_post_meta( $product_id, '_productNO', $no );
+                update_post_meta( $product_id, '_Manufacturer', $manufacturers );
+                update_post_meta( $product_id, '_Videos', $video_urls );
+                update_post_meta( $product_id, '_Yield', $yield );
+                update_post_meta( $product_id, '_Compatible_Printers', $printer_names );
+
+
                 // set product gallery images
                 if ( !empty( $images ) && is_array( $images ) ) {
                     foreach ( $images as $image_url ) {
