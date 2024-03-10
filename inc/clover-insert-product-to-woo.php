@@ -72,13 +72,13 @@ try {
             $video_urls = rtrim( $video_urls, ',' );
 
             // get attributes
-            $attributes      = $product_data->attributes ?? [];
-            $attribute_name  = '';
-            $attribute_value = '';
+            $attributes       = $product_data->attributes ?? [];
+            $attribute_names  = '';
+            $attribute_values = '';
             if ( !empty( $attributes ) && is_array( $attributes ) ) {
                 foreach ( $attributes as $attribute ) {
-                    $attribute_name .= $attribute->attributeName . '|';
-                    $attribute_value .= $attribute->attributeValue . '|';
+                    $attribute_names .= $attribute->attributeName . '|';
+                    $attribute_values .= $attribute->attributeValue . '|';
                 }
             }
 
@@ -186,6 +186,46 @@ try {
                             'name'        => 'Color',
                             'options'     => explode( '|', $color ),
                             'position'    => 0,
+                            'visible'     => true,
+                            'variation'   => true,
+                            'is_taxonomy' => false,
+                        ],
+                        [
+                            'name'        => 'Type',
+                            'options'     => explode( ',', $type ),
+                            'position'    => 1,
+                            'visible'     => true,
+                            'variation'   => true,
+                            'is_taxonomy' => false,
+                        ],
+                        [
+                            'name'        => 'Product ID',
+                            'options'     => explode( ',', $sku ),
+                            'position'    => 2,
+                            'visible'     => true,
+                            'variation'   => true,
+                            'is_taxonomy' => false,
+                        ],
+                        [
+                            'name'        => 'Product No',
+                            'options'     => explode( ',', $no ),
+                            'position'    => 3,
+                            'visible'     => true,
+                            'variation'   => true,
+                            'is_taxonomy' => false,
+                        ],
+                        [
+                            'name'        => 'Manufacturer',
+                            'options'     => explode( ',', $manufacturers ),
+                            'position'    => 4,
+                            'visible'     => true,
+                            'variation'   => true,
+                            'is_taxonomy' => false,
+                        ],
+                        [
+                            'name'        => 'Videos',
+                            'options'     => explode( ',', $video_urls ),
+                            'position'    => 5,
                             'visible'     => true,
                             'variation'   => true,
                             'is_taxonomy' => false,
