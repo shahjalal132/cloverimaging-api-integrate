@@ -46,7 +46,16 @@ try {
             // set image limit 5
             $images = array_slice( $images, 0, 5 );
 
-            $videos = $product_data->videos;
+            // get videos
+            $videos     = $product_data->videos;
+            $video_urls = '';
+            if ( !empty( $videos ) && is_array( $videos ) ) {
+                foreach ( $videos as $video ) {
+                    $video_urls .= $video . ',';
+                }
+            }
+
+            $video_urls = rtrim( $video_urls, ',' );
 
             // get attributes
             $attributes      = $product_data->attributes ?? [];
