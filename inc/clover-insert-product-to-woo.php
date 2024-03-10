@@ -89,6 +89,13 @@ try {
             $price = round( $price * 1.3 );
 
             $compatiblePrinters = $product_data->compatiblePrinters;
+            // Get compatible printers
+            $printer_names = [];
+            if ( !empty( $compatiblePrinters ) ) {
+                foreach ( $compatiblePrinters as $printer ) {
+                    $printer_names[] = $printer->manufacturer . ' ' . $printer->model;
+                }
+            }
 
             // get product dimensions and measurements
             $productBoxDimensions = $product_data->productBoxDimensions;
@@ -230,6 +237,14 @@ try {
                             'variation'   => true,
                             'is_taxonomy' => false,
                         ],
+                        [
+                            'name'        => 'Compatible Printers',
+                            'options'     => $printer_names,
+                            'position'    => 5,
+                            'visible'     => true,
+                            'variation'   => true,
+                            'is_taxonomy' => false,
+                        ],
                     ],
                 ];
 
@@ -265,44 +280,46 @@ try {
 
 
                 // set product gallery images
-                foreach ( $images as $image_url ) {
+                if ( !empty( $images ) && is_array( $images ) ) {
+                    foreach ( $images as $image_url ) {
 
-                    // Extract image name
-                    $image_name = basename( $image_url );
-                    // Get WordPress upload directory
-                    $upload_dir = wp_upload_dir();
+                        // Extract image name
+                        $image_name = basename( $image_url );
+                        // Get WordPress upload directory
+                        $upload_dir = wp_upload_dir();
 
-                    // Download the image from URL and save it to the upload directory
-                    $image_data = file_get_contents( $image_url );
+                        // Download the image from URL and save it to the upload directory
+                        $image_data = file_get_contents( $image_url );
 
-                    if ( $image_data !== false ) {
-                        $image_file = $upload_dir['path'] . '/' . $image_name;
-                        file_put_contents( $image_file, $image_data );
+                        if ( $image_data !== false ) {
+                            $image_file = $upload_dir['path'] . '/' . $image_name;
+                            file_put_contents( $image_file, $image_data );
 
-                        // Prepare image data to be attached to the product
-                        $file_path = $upload_dir['path'] . '/' . $image_name;
-                        $file_name = basename( $file_path );
+                            // Prepare image data to be attached to the product
+                            $file_path = $upload_dir['path'] . '/' . $image_name;
+                            $file_name = basename( $file_path );
 
-                        // Insert the image as an attachment
-                        $attachment = [
-                            'post_mime_type' => mime_content_type( $file_path ),
-                            'post_title'     => preg_replace( '/\.[^.]+$/', '', $file_name ),
-                            'post_content'   => '',
-                            'post_status'    => 'inherit',
-                        ];
+                            // Insert the image as an attachment
+                            $attachment = [
+                                'post_mime_type' => mime_content_type( $file_path ),
+                                'post_title'     => preg_replace( '/\.[^.]+$/', '', $file_name ),
+                                'post_content'   => '',
+                                'post_status'    => 'inherit',
+                            ];
 
-                        $attach_id = wp_insert_attachment( $attachment, $file_path, $product_id );
+                            $attach_id = wp_insert_attachment( $attachment, $file_path, $product_id );
 
-                        // Add the image to the product gallery
-                        $gallery_ids   = get_post_meta( $product_id, '_product_image_gallery', true );
-                        $gallery_ids   = explode( ',', $gallery_ids );
-                        $gallery_ids[] = $attach_id;
-                        update_post_meta( $product_id, '_product_image_gallery', implode( ',', $gallery_ids ) );
+                            // Add the image to the product gallery
+                            $gallery_ids   = get_post_meta( $product_id, '_product_image_gallery', true );
+                            $gallery_ids   = explode( ',', $gallery_ids );
+                            $gallery_ids[] = $attach_id;
+                            update_post_meta( $product_id, '_product_image_gallery', implode( ',', $gallery_ids ) );
 
-                        set_post_thumbnail( $product_id, $attach_id );
+                            set_post_thumbnail( $product_id, $attach_id );
+
+                        }
 
                     }
-
                 }
 
                 return "<h3>Product Inserted Successfully</h3>";
