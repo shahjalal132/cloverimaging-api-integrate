@@ -97,6 +97,9 @@ try {
                 }
             }
 
+            // get unique value from $printer_names
+            $printer_names = array_unique( $printer_names );
+
             // get product dimensions and measurements
             $productBoxDimensions = $product_data->productBoxDimensions;
             $unitOfMeasure        = $productBoxDimensions->unitOfMeasure ?? '';
@@ -240,7 +243,7 @@ try {
                         [
                             'name'        => 'Compatible Printers',
                             'options'     => $printer_names,
-                            'position'    => 5,
+                            'position'    => 6,
                             'visible'     => true,
                             'variation'   => true,
                             'is_taxonomy' => false,
