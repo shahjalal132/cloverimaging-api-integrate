@@ -40,6 +40,7 @@ try {
             $type         = $product_data->type;
             $color        = $product_data->color;
             $availability = $product_data->availability;
+            $yield        = $product_data->yield ?? '';
 
             // get oemNos and manufacturer
             $oemNos        = $product_data->oemNos;
@@ -241,9 +242,17 @@ try {
                             'is_taxonomy' => false,
                         ],
                         [
+                            'name'        => 'Yield',
+                            'options'     => explode( ',', $yield ),
+                            'position'    => 6,
+                            'visible'     => true,
+                            'variation'   => true,
+                            'is_taxonomy' => false,
+                        ],
+                        [
                             'name'        => 'Compatible Printers',
                             'options'     => $printer_names,
-                            'position'    => 6,
+                            'position'    => 7,
                             'visible'     => true,
                             'variation'   => true,
                             'is_taxonomy' => false,
