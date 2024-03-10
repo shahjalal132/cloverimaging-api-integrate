@@ -100,6 +100,8 @@ try {
 
             // get unique value from $printer_names
             $printer_names = array_unique( $printer_names );
+            // convert to string
+            $printer_names = implode( ', ', $printer_names );
 
             // get product dimensions and measurements
             $productBoxDimensions = $product_data->productBoxDimensions;
