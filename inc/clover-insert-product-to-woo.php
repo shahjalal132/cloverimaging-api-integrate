@@ -29,6 +29,10 @@ try {
             // decode operation_value
             $product_data = json_decode( $product_data );
 
+            /* echo '<pre>';
+            print_r( $product_data );
+            wp_die(); */
+
             // retrieve product data
             $sku          = $product_data->ID;
             $title        = $product_data->title;
@@ -192,6 +196,9 @@ try {
 
                 // set tag
                 wp_set_object_terms( $product_id, $searchKeywords, 'product_tag', true );
+
+                // Set product category
+                wp_set_object_terms( $product_id, $type, 'product_cat' );
 
 
                 // set product gallery images
