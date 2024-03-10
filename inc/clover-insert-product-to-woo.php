@@ -73,13 +73,11 @@ try {
             $video_urls = rtrim( $video_urls, ',' );
 
             // get attributes
-            $attributes       = $product_data->attributes ?? [];
-            $attribute_names  = '';
-            $attribute_values = '';
+            $attributes  = $product_data->attributes ?? [];
+            $_attributes = [];
             if ( !empty( $attributes ) && is_array( $attributes ) ) {
                 foreach ( $attributes as $attribute ) {
-                    $attribute_names .= $attribute->attributeName . '|';
-                    $attribute_values .= $attribute->attributeValue . '|';
+                    $_attributes[] = $attribute->attributeName . ', ' . $attribute->attributeValue;
                 }
             }
 
