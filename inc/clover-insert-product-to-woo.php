@@ -41,6 +41,20 @@ try {
             $color        = $product_data->color;
             $availability = $product_data->availability;
 
+            // get oemNos and manufacturer
+            $oemNos        = $product_data->oemNos;
+            $manufacturers = '';
+            $ome_nos       = '';
+            if ( !empty( $oemNos ) && is_array( $oemNos ) ) {
+                foreach ( $oemNos as $oneNo ) {
+                    $manufacturers .= $oneNo->manufacturer . ',';
+                    $ome_nos .= $oneNo->oemNo . ',';
+                }
+            }
+
+            $manufacturers = rtrim( $manufacturers, ',' );
+            $ome_nos       = rtrim( $ome_nos, ',' );
+
             // get images
             $images = $product_data->images ?? [];
             // set image limit 5
