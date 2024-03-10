@@ -162,16 +162,7 @@ try {
                     'sku'         => "$sku",
                     'type'        => 'simple',
                     'description' => $description,
-                    'attributes'  => [
-                        [
-                            'name'        => 'Color',
-                            'options'     => explode( '|', $color ),
-                            'position'    => 0,
-                            'visible'     => true,
-                            'variation'   => true,
-                            'is_taxonomy' => false,
-                        ],
-                    ],
+                    'attributes'  => [],
                 ];
 
                 // update product
@@ -192,72 +183,7 @@ try {
                     'sku'         => "$sku",
                     'type'        => 'simple',
                     'description' => $description,
-                    'attributes'  => [
-                        [
-                            'name'        => 'Color',
-                            'options'     => explode( '|', $color ),
-                            'position'    => 0,
-                            'visible'     => true,
-                            'variation'   => true,
-                            'is_taxonomy' => false,
-                        ],
-                        [
-                            'name'        => 'Type',
-                            'options'     => explode( ',', $type ),
-                            'position'    => 1,
-                            'visible'     => true,
-                            'variation'   => true,
-                            'is_taxonomy' => false,
-                        ],
-                        [
-                            'name'        => 'Product ID',
-                            'options'     => explode( ',', $sku ),
-                            'position'    => 2,
-                            'visible'     => true,
-                            'variation'   => true,
-                            'is_taxonomy' => false,
-                        ],
-                        [
-                            'name'        => 'Product No',
-                            'options'     => explode( ',', $no ),
-                            'position'    => 3,
-                            'visible'     => true,
-                            'variation'   => true,
-                            'is_taxonomy' => false,
-                        ],
-                        [
-                            'name'        => 'Manufacturer',
-                            'options'     => explode( ',', $manufacturers ),
-                            'position'    => 4,
-                            'visible'     => true,
-                            'variation'   => true,
-                            'is_taxonomy' => false,
-                        ],
-                        [
-                            'name'        => 'Videos',
-                            'options'     => explode( ',', $video_urls ),
-                            'position'    => 5,
-                            'visible'     => true,
-                            'variation'   => true,
-                            'is_taxonomy' => false,
-                        ],
-                        [
-                            'name'        => 'Yield',
-                            'options'     => explode( ',', $yield ),
-                            'position'    => 6,
-                            'visible'     => true,
-                            'variation'   => true,
-                            'is_taxonomy' => false,
-                        ],
-                        [
-                            'name'        => 'Compatible Printers',
-                            'options'     => $printer_names,
-                            'position'    => 7,
-                            'visible'     => true,
-                            'variation'   => true,
-                            'is_taxonomy' => false,
-                        ],
-                    ],
+                    'attributes'  => [],
                 ];
 
                 // Create the product
