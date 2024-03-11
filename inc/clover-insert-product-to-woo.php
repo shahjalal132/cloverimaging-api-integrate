@@ -73,13 +73,25 @@ try {
             $video_urls = rtrim( $video_urls, ',' );
 
             // get attributes
-            $attributes  = $product_data->attributes ?? [];
-            $_attributes = [];
+            $attributes = $product_data->attributes ?? [];
+            // $_attributes = [];
+            $_attribute_names   = '';
+            $_attributes_values = '';
             if ( !empty( $attributes ) && is_array( $attributes ) ) {
                 foreach ( $attributes as $attribute ) {
-                    $_attributes[] = $attribute->attributeName . ', ' . $attribute->attributeValue;
+                    // $_attributes[] = $attribute->attributeName . ', ' . $attribute->attributeValue;
+                    $_attribute_names .= $attribute->attributeName . ',';
+                    $_attributes_values .= $attribute->attributeValue . ',';
                 }
             }
+
+            // trim , from end
+            $_attribute_names   = rtrim( $_attribute_names, ',' );
+            $_attributes_values = rtrim( $_attributes_values, ',' );
+
+            // convert to array $_attributes_names and $_attributes_values
+            $_attribute_names  = explode( ',', $_attribute_names );
+            $_attributes_values = explode( ',', $_attributes_values );
 
             $serviceLevels = $product_data->serviceLevels;
             // get price from serviceLevels
