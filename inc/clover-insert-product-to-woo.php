@@ -90,7 +90,7 @@ try {
             $_attributes_values = rtrim( $_attributes_values, ',' );
 
             // convert to array $_attributes_names and $_attributes_values
-            $_attribute_names  = explode( ',', $_attribute_names );
+            $_attribute_names   = explode( ',', $_attribute_names );
             $_attributes_values = explode( ',', $_attributes_values );
 
             $serviceLevels = $product_data->serviceLevels;
@@ -189,21 +189,85 @@ try {
                     [ 'id' => $product->id ]
                 );
 
-                // Create a new product if not exists
-                $product_data_to_insert = [
-                    'name'        => $title,
-                    'sku'         => "$sku",
-                    'type'        => 'simple',
-                    'description' => $description,
-                    'attributes'  => [],
-                ];
+                if ( !empty( $attributes ) ) {
 
-                // Create the product
-                $product    = $client->post( 'products', $product_data_to_insert );
-                $product_id = $product->id;
+                    // Create a new variable product if not exists
+                    $product_data_to_insert = [
+                        'name'        => $title,
+                        'sku'         => "$sku",
+                        'type'        => 'variable',
+                        'description' => $description,
+                        'attributes'  => [
+                            [
+                                'name'        => 'Attributes',
+                                'options'     => $_attribute_names,
+                                'position'    => 0,
+                                'visible'     => true,
+                                'variation'   => true,
+                                'is_taxonomy' => false,
+                            ],
+                            [
+                                'name'        => 'Values',
+                                'options'     => $_attributes_values,
+                                'position'    => 1,
+                                'visible'     => true,
+                                'variation'   => true,
+                                'is_taxonomy' => false,
+                            ],
+                        ],
+                    ];
+
+                    // Create the product
+                    $product    = $client->post( 'products', $product_data_to_insert );
+                    $product_id = $product->id;
+
+                    // Add variations
+
+                    // Add variation data
+                    $variation_data = [
+
+                        'attributes'     => [
+                            [
+                                'name'  => 'Attributes',
+                                'value' => 'Attribute',
+                            ],
+                            [
+                                'name'  => 'Values',
+                                'value' => 'Value',
+                            ],
+                        ],
+
+                        'regular_price'  => "{$price}",
+                        'stock_quantity' => $availability == 'In Stock' ? 10 : 0,
+                    ];
+
+                    // Add variation
+                    $client->post( 'products/' . $product_id . '/variations', $variation_data );
+
+                } else {
+
+                    // Create a new simple product if not exists
+                    $product_data_to_insert = [
+                        'name'        => $title,
+                        'sku'         => "$sku",
+                        'type'        => 'simple',
+                        'description' => $description,
+                        'attributes'  => [],
+                    ];
+
+                    // Create the product
+                    $product    = $client->post( 'products', $product_data_to_insert );
+                    $product_id = $product->id;
+                }
 
                 // Set product information
-                wp_set_object_terms( $product_id, 'simple', 'product_type' );
+
+                if ( !empty( $attributes ) ) {
+                    wp_set_object_terms( $product_id, 'variable', 'product_type' );
+                } else {
+                    wp_set_object_terms( $product_id, 'simple', 'product_type' );
+                }
+
                 update_post_meta( $product_id, '_visibility', 'visible' );
 
                 if ( 'In Stock' == $availability ) {
